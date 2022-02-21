@@ -1,12 +1,17 @@
-import { Header } from "components";
+import { Provider as NextAuthProvider } from "next-auth/client";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "redux/store";
+import Header from "components/Header";
 import 'styles/globals.css';
 
-function MyApp({ Component, ...pageProps }) {
+function MyApp({ Component, pageProps }) {
   	return (
-  		<>
-  			<Header />
-  			<Component {...pageProps} />
-  		</>
+  		<NextAuthProvider session={pageProps.session}>
+  			<ReduxProvider store={store}>
+	  			<Header />
+	  			<Component {...pageProps} />
+  			</ReduxProvider>
+  		</NextAuthProvider>
   	);
 }
 
